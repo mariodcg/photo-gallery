@@ -19,14 +19,20 @@ export class Tab2Page {
     const actionSheet = await this.actionSheetController.create({
       header: 'Photos',
       buttons: [{
-        text: 'Delete',
+        text: 'Guardar',
+        icon: 'image',
+        handler: () => {
+          this.photoService.saveImagen(photo);
+        }
+      },{
+        text: 'Borrar',
         role: 'destructive',
         icon: 'trash',
         handler: () => {
           this.photoService.deletePicture(photo, position);
         }
       }, {
-        text: 'Cancel',
+        text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
         handler: () => {

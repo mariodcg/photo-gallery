@@ -61,7 +61,8 @@ export class PhotoService {
       source: CameraSource.Camera, // automatically take a new photo with the camera
       quality: 100, // highest quality (0 to 100)
       saveToGallery: true,
-      promptLabelHeader: 'Foto Prueba'
+      promptLabelHeader: 'Foto Prueba',
+      
     });
     
     const savedImageFile = await this.savePicture(capturedPhoto);
@@ -168,6 +169,20 @@ export class PhotoService {
     });
   }
 
+  public async saveImagen(photo: Photo) {
+    const readFile = await Filesystem.readFile({
+      path: photo.filepath,
+      directory: FilesystemDirectory.Data
+    });
+    photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
+    const fileName = 'Dobra' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: fileName,
+      data: photo.base64,
+      directory: FilesystemDirectory.Documents
+    }); 
+  }
+ 
   convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
     reader.onerror = reject;
