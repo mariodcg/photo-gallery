@@ -174,6 +174,7 @@ export class PhotoService {
       path: photo.filepath,
       directory: FilesystemDirectory.Data
     });
+    console.log(FilesystemDirectory.Documents);
     photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
     const fileName = 'Dobra' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
