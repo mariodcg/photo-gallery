@@ -99,7 +99,7 @@ export class PhotoService {
     });
 
     const fotoNueva1 = await watermark([base64Data])
-    .image(watermark.text.lowerLeft('Torrelavega', '60px Arial', '#fff', 0.5));
+    .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));
 
     const savedFile = await Filesystem.writeFile({
       path: fileName,
@@ -119,7 +119,7 @@ export class PhotoService {
       // Use webPath to display the new image instead of base64 since it's 
       // already loaded into memory
       const fotoNueva1 = await watermark([cameraPhoto.webPath])
-      .image(watermark.text.lowerLeft('Torrelavega', '60px Arial', '#fff', 0.5));      
+      .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));      
       return {
         filepath: fileName,
         webviewPath: fotoNueva1.src,
