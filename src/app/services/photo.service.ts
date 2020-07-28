@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import * as watermark from 'watermarkjs';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 
@@ -20,7 +19,7 @@ export class PhotoService {
   private platform: Platform;
  
 
-  constructor(platform: Platform, private fileOpener: FileOpener) {
+  constructor(platform: Platform) {
     this.platform = platform;
    }
 
@@ -188,14 +187,10 @@ export class PhotoService {
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: photo.base64,
-      directory: FilesystemDirectory.Data
+      directory: FilesystemDirectory.Documents
     });
-    var texto = '';
-    this.fileOpener.showOpenWithDialog(photo.filepath, 'image/jpeg')
-    .then(() => texto = 'File is opened')
-    .catch(e => texto = 'Error opening file' +  e);
     await Toast.show({
-      text: texto
+      text: 'Descarga correcta'
     });
   }
  
