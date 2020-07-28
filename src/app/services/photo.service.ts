@@ -174,6 +174,11 @@ export class PhotoService {
       directory: FilesystemDirectory.Data
     });
   }
+ 
+  public async descargarImage(photo: Photo)
+  {
+      window.open(photo.filepath);
+  }
 
   public async saveImagen(photo: Photo) {
     const readFile = await Filesystem.readFile({

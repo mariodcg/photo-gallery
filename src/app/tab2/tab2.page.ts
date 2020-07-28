@@ -25,6 +25,12 @@ export class Tab2Page {
           this.photoService.saveImagen(photo);
         }
       },{
+        text: 'Descargar',
+        icon: 'image',
+        handler: () => {
+          this.photoService.descargarImage(photo);
+        }
+      },{
         text: 'Borrar',
         role: 'destructive',
         icon: 'trash',
