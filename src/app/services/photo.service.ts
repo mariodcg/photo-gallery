@@ -2,8 +2,14 @@ import { Injectable } from '@angular/core';
 import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import * as watermark from 'watermarkjs';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
+
 
 const { Camera, Filesystem, Storage } = Plugins;
+const { Toast } = Plugins;
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +18,9 @@ export class PhotoService {
   public photos: Photo[] = [];
   private PHOTO_STORAGE: string = "photos";
   private platform: Platform;
+ 
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, private fileOpener: FileOpener) {
     this.platform = platform;
    }
 
@@ -64,6 +71,7 @@ export class PhotoService {
       promptLabelHeader: 'Foto Prueba',
       
     });
+  
     
     const savedImageFile = await this.savePicture(capturedPhoto);
 
@@ -180,8 +188,15 @@ export class PhotoService {
     const savedFile = await Filesystem.writeFile({
       path: fileName,
       data: photo.base64,
-      directory: FilesystemDirectory.ExternalStorage
-    }); 
+      directory: FilesystemDirectory.Data
+    });
+    
+    this.fileOpener.showOpenWithDialog(photo.filepath, 'image/jpeg')
+    .then(() => console.log('File is opened'))
+    .catch(e => console.log('Error opening file', e));
+    await Toast.show({
+      text: FilesystemDirectory.ExternalStorage
+    });
   }
  
   convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
