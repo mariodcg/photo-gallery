@@ -190,12 +190,12 @@ export class PhotoService {
       data: photo.base64,
       directory: FilesystemDirectory.Data
     });
-    
+    var texto = '';
     this.fileOpener.showOpenWithDialog(photo.filepath, 'image/jpeg')
-    .then(() => console.log('File is opened'))
-    .catch(e => console.log('Error opening file', e));
+    .then(() => texto = 'File is opened')
+    .catch(e => texto = 'Error opening file' +  e);
     await Toast.show({
-      text: FilesystemDirectory.ExternalStorage
+      text: texto
     });
   }
  
