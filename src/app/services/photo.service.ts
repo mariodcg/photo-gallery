@@ -177,7 +177,23 @@ export class PhotoService {
  
   public async descargarImage(photo: Photo)
   {
-      window.open(photo.filepath);
+    const readFile = await Filesystem.readFile({
+      path: photo.filepath,
+      directory: FilesystemDirectory.Data
+    });
+    console.log(FilesystemDirectory.Documents);
+    photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
+    const byteString: string = window.atob(photo.base64);
+    const arrayBuffer: ArrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array: Uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    //const downloadedFile = new Blob([photo], { type: 'image/png' });
+    let fileURL = URL.createObjectURL(blob);
+    window.open(fileURL);    
   }
 
   public async saveImagen(photo: Photo) {
