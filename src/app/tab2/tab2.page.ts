@@ -19,12 +19,6 @@ export class Tab2Page {
     const actionSheet = await this.actionSheetController.create({
       header: 'Photos',
       buttons: [{
-        text: 'Guardar',
-        icon: 'image',
-        handler: () => {
-          this.photoService.saveImagen(photo);
-        }
-      },{
         text: 'Descargar',
         icon: 'image',
         handler: () => {
