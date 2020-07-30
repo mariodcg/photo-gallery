@@ -183,6 +183,7 @@ export class PhotoService {
     });
     console.log(FilesystemDirectory.Documents);
     photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
+
     const byteString: string = window.atob(photo.base64);
     const arrayBuffer: ArrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array: Uint8Array = new Uint8Array(arrayBuffer);
