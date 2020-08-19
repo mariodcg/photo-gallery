@@ -107,8 +107,11 @@ export class PhotoService {
       directory: FilesystemDirectory.Data
     });
 
-    const fotoNueva1 = await watermark([base64Data])
-    .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));
+    // const fotoNueva2 = await watermark([base64Data])
+    // .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));
+
+    const fotoNueva1 = await watermark([base64Data, 'assets/imgs/torre.png'])
+    .image(watermark.image.center(0.5))
 
     const savedFile = await Filesystem.writeFile({
       path: fileName,
@@ -127,8 +130,12 @@ export class PhotoService {
     else {
       // Use webPath to display the new image instead of base64 since it's 
       // already loaded into memory
-      const fotoNueva1 = await watermark([cameraPhoto.webPath])
-      .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));      
+      // const fotoNueva2 = await watermark([cameraPhoto.webPath])
+      // .image(watermark.text.lowerLeft('Torrelavega', '120px Arial', '#fff', 0.5));      
+
+      const fotoNueva1 = await watermark([cameraPhoto.webPath, 'assets/imgs/torre.png'])
+      .image(watermark.image.center(0.5))
+
       return {
         filepath: fileName,
         webviewPath: fotoNueva1.src,
@@ -189,8 +196,10 @@ export class PhotoService {
       .then(res => res.blob())
       .then(blob => {
         let fileURL = URL.createObjectURL(blob);
-        window.open(fileURL);    
+        window.open(fileURL,'_system','location=yes');  
       })
+
+    //const downloadedFile = new Blob([photo], { type: 'image/png' });
   }
 
   public async saveImagen(photo: Photo) {
